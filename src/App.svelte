@@ -3,13 +3,16 @@
   import Router from "./utils/router/router.svelte";
   import { getToken } from "./storage/token";
   import { navigate } from "./utils/router/helper";
+  import { navigationStore } from "./store/navigation";
 
   onMount(() => {
     const token = getToken();
 
-    if (token) {
-      navigate("/dashboard");
-    } else {
+    navigationStore.set({
+      page: window.location.pathname,
+    });
+
+    if (!token) {
       navigate("/auth");
     }
   });
